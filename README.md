@@ -31,3 +31,5 @@ For more information, see [Prerequisites](./Prerequisites.md)
 - Step 11: Implement Liveness and Readiness Probes
 - Step 12: Utilize ConfigMaps and Secrets
 - Step 13: Document Your Process
+
+For more information, see [Implementation](./Implementation.md)
