@@ -14,6 +14,8 @@ The [Kubernetes Resume Challenge](https://cloudresumechallenge.dev/docs/extensio
 - Kubernetes Crash Course
 - E-commerce Application Source Code and DB Scripts
 
+For more information, see [Prerequisites](./Prerequisites.md)
+
 ## Implementation
 
 - Step 1: Certification
