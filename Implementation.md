@@ -2,7 +2,8 @@
 
 ## Step 1: Certification
 
-To tackle this challenge effectively, challenger needs to have a solid understanding of Kubernetes concepts and practical experience - equivalent to passed a Certified Kubernetes Application Developer (CKAD).
+To tackle this challenge effectively, challenger needs to have a solid understanding of Kubernetes concepts and
+practical experience - equivalent to passed a Certified Kubernetes Application Developer (CKAD).
 
 Before this challenge,
 
@@ -17,6 +18,29 @@ But it's almost one year ago, so I'll
 - take the CKDA certification later (in this year)
 
 ## Step 2: Containerize Your E-Commerce Website and Database
+
+### A. Web Application Containerization
+
+1. **Create a Dockerfile**: Navigate to the root of the e-commerce application and create a Dockerfile. This file should
+   instruct Docker to:
+
+    - Use `php:7.4-apache` as the base image.
+    - Install `mysqli` extension for PHP.
+    - Copy the application source code to `/var/www/html/`.
+    - Update database connection strings to point to a Kubernetes service named `mysql-service`.
+    - Expose port `80` to allow traffic to the web server.
+
+2. **Build and Push the Docker Image**:
+
+    - Execute `docker build -t yourdockerhubusername/ecom-web:v1 .` to build your image.
+    - Push it to Docker Hub with `docker push yourdockerhubusername/ecom-web:v1`.
+    - **Outcome**: Your web application Docker image is now available on Docker Hub.
+
+### B. Database Containerization
+
+- **Database Preparation**: Instead of containerizing the database yourself, you'll use the official MariaDB image.
+  Prepare the database initialization script (`db-load-script.sql`) to be used with Kubernetes ConfigMaps or as an
+  entrypoint script.
 
 ## Step 3: Set Up Kubernetes on a Public Cloud Provider
 
