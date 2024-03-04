@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: result-app
+  labels:
+    name: result-app-service
+    app: demo-app
+spec:
+  selector:
+    name: result-app-pod
+    app: demo-app
+  type: NodePort
+  ports:
+    - nodePort: 30002
+      port: 80
+      # protocol: TCP
+      targetPort: 80
