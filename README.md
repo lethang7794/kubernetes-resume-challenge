@@ -1,6 +1,7 @@
 # My Kubernetes Resume Challenge (KRC)
 
-The [Kubernetes Resume Challenge](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/) is project that
+The [Kubernetes Resume Challenge](https://cloudresumechallenge.dev/docs/extensions/kubernetes-challenge/) is project
+that
 
 - highlights proficiency in **Kubernetes & containerization**,
 - demonstrates the ability to _deploy, scale & manage_ web applications efficiently in a K8s environment,
