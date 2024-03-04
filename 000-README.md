@@ -15,7 +15,7 @@ that
 - Kubernetes Crash Course
 - E-commerce Application Source Code and DB Scripts
 
-For more information, see [Prerequisites](./Prerequisites.md)
+For more information, see [Prerequisites](./100-Prerequisites)
 
 ## Implementation
 
@@ -33,4 +33,4 @@ For more information, see [Prerequisites](./Prerequisites.md)
 - Step 12: Utilize ConfigMaps and Secrets
 - Step 13: Document Your Process
 
-For more information, see [Implementation](./Implementation.md)
+For more information, see [Implementation](./200-Implementation)
