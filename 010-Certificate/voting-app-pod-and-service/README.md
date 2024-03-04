@@ -8,8 +8,7 @@ kubectl create -f ./postgres-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,services
 ```
 
 ## Create pod & service for redis
@@ -20,8 +19,7 @@ kubectl create -f ./redis-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,services
 ```
 
 ## Create pod & service for result-app
@@ -32,8 +30,7 @@ kubectl create -f ./result-app-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,services
 ```
 
 Something went wrong with the result-app-pod `Error: ErrImagePull`. The image cannot be pulled, let's update the image
@@ -51,8 +48,7 @@ kubectl create -f ./voting-app-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,services
 ```
 
 ## Create pod & service for worker-app
@@ -62,7 +58,7 @@ kubectl create -f ./worker-app-pod.yaml
 ```
 
 ```shell
-kubectl get pods
+kubectl get pods,services
 ```
 
 ## Let's access the voting-app & result app
