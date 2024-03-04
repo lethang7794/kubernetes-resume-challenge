@@ -1,68 +1,77 @@
 # Step 1.2: Deploy voting app with `pod`, `deployment` & `service`
 
-## Create pod & service for postgres
+## Cleanup all pod & services for previous step
 
 ```shell
-kubectl create -f ./postgres-pod.yaml
+kubectl get services
+```
+
+```
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+db           ClusterIP   10.110.160.200   <none>        5432/TCP       94m
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        2d
+redis        ClusterIP   10.99.171.159    <none>        6379/TCP       93m
+result-app   NodePort    10.98.41.9       <none>        80:30002/TCP   92m
+voting-app   NodePort    10.109.109.5     <none>        80:30001/TCP   83m
+```
+
+```shell
+# At the folder with all the resources definition for last step
+kubectl delete -f '*.yaml'
+```
+
+## Create deployment & service for postgres
+
+```shell
+kubectl create -f ./postgres-deploy.yaml
 kubectl create -f ./postgres-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,deployments,services
 ```
 
-## Create pod & service for redis
+## Create deployment & service for redis
 
 ```shell
-kubectl create -f ./redis-pod.yaml
+kubectl create -f ./redis-deploy.yaml
 kubectl create -f ./redis-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,deployments,services
 ```
 
-## Create pod & service for result-app
+## Create deployment & service for result-app
 
 ```shell
-kubectl create -f ./result-app-pod.yaml
+kubectl create -f ./result-app-deploy.yaml
 kubectl create -f ./result-app-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,deployments,services
 ```
 
-Something went wrong with the result-app-pod `Error: ErrImagePull`. The image cannot be pulled, let's update the image
-and apply the new pod definition.
+## Create deployment & service for voting-app
 
 ```shell
-kubectl apply -f ./result-app-pod.yaml
-```
-
-## Create pod & service for voting-app
-
-```shell
-kubectl create -f ./voting-app-pod.yaml
+kubectl create -f ./voting-app-deploy.yaml
 kubectl create -f ./voting-app-service.yaml
 ```
 
 ```shell
-kubectl get pods
-kubectl get services
+kubectl get pods,deployments,services
 ```
 
-## Create pod & service for worker-app
+## Create deployment & service for worker-app
 
 ```shell
-kubectl create -f ./worker-app-pod.yaml
+kubectl create -f ./worker-app-deploy.yaml
 ```
 
 ```shell
-kubectl get pods
+kubectl get pods,deployments,services
 ```
 
 ## Let's access the voting-app & result app
