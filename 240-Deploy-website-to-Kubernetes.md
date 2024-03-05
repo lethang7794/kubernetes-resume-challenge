@@ -1,6 +1,8 @@
 # Step 4: Deploy Your Website to Kubernetes
 
-## First use the Pod object
+## First use pod & service to expose our ecom-app
+
+- Pod for `ecom-web` container
 
 ```yaml
 # ecom-web.pod.yaml
@@ -21,6 +23,8 @@ spec:
 cd "240-Deploy-website-to-Kubernetes"
 kubectl apply -f "./ecom-web.pod.yaml"
 ```
+
+- Pod for `ecom-db` container
 
 ```yaml
 apiVersion: v1
@@ -48,4 +52,50 @@ cd "240-Deploy-website-to-Kubernetes"
 kubectl apply -f "./ecom-db.pod.yaml"
 ```
 
-## Use the Deployment object
+- Service that expose `ecom-db` inside the cluster
+
+    ```yaml
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: mysql-service
+    spec:
+      selector:
+        name: ecom-db-pod
+        app: ecom-app
+      ports:
+        - protocol: TCP
+          port: 3036
+          targetPort: 3036
+      type: ClusterIP
+      
+    ```
+
+    ```shell
+    cd "240-Deploy-website-to-Kubernetes"
+    kubectl apply -f "./ecom-db.service.yaml"
+    ```
+
+- Service that expose `ecom-web` outside the cluster
+
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: ecom-web-service
+  spec:
+    selector:
+      name: ecom-web-pod
+      app: ecom-app
+    ports:
+      - protocol: TCP
+        nodePort: 30001
+        port: 80
+        targetPort: 80
+    type: NodePort
+  ```
+
+  ```shell
+  cd "240-Deploy-website-to-Kubernetes"
+  kubectl apply -f "./ecom-web.service.yaml"
+  ```

@@ -10,9 +10,13 @@ spec:
     - name: ecom-db-pod
       image: lethang7794/ecom-db:v1
       ports:
-        - containerPort: 3036
+        - containerPort: 3306
       env:
+        - name: MARIADB_USER
+          value: "db_user"
+        - name: MARIADB_PASSWORD
+          value: "password"
+        - name: MARIADB_ROOT_PASSWORD
+          value: "root_password"
         - name: MARIADB_DATABASE
           value: "ecomdb"
-        - name: MARIADB_ROOT_PASSWORD
-          value: "password"
