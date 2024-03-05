@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ecom-web-pod
+  labels:
+    name: ecom-web-pod
+    app: ecom-app
+spec:
+  containers:
+    - name: ecom-web-pod
+      image: lethang7794/ecom-web:v1
