@@ -85,45 +85,84 @@ Ref:
 
 ### Use the official MariaDB image
 
-### Prepare the database initialize script with ConfigMap
+```Dockerfile
+# db.Dockerfile
+FROM mariadb
+
+ADD /assets/*.sql /docker-entrypoint-initdb.d
+```
+
+Let's run build & test the image
+
+```shell
+# cd to ecommerce repo
+cd ./220-Containerize-e-commerce-website-and-database/learning-app-ecommerce
+
+# build image
+docker build -t lethang7794/ecom-db:v1 -f ./db.Dockerfile .
+
+```
+
+```shell
+# run the container
+docker run --env 'MARIADB_ROOT_PASSWORD=password' --env 'MARIADB_DATABASE=ecomdb' -p 3306:3306  lethang7│
+794/ecom-db:v1
+```
+
+```shell
+# push image to docker hub
+docker push lethang7794/ecom-db:v1
+```
+
+The docker image for db is available at https://hub.docker.com/repository/docker/lethang7794/ecom-db
+
+### Prepare the database initialize script
+
+#### Option 1: Use ConfigMap
 
 - Store the script in a ConfigMap
 
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: db-load-script-configmap
-data:
-  db-load-script.sql: |
-    USE ecomdb;
-    CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name varchar(255) default NULL,Price varchar(255) default NULL, ImageUrl varchar(255) default NULL,PRIMARY KEY (id)) AUTO_INCREMENT=1;
-    INSERT INTO products (Name,Price,ImageUrl) VALUES ("Laptop","100","c-1.png"),("Drone","200","c-2.png"),("VR","300","c-3.png"),("Tablet","50","c-5.png"),("Watch","90","c-6.png"),("Phone Covers","20","c-7.png"),("Phone","80","c-8.png"),("Laptop","150","c-4.png");
-```
+    ```yaml
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: db-load-script-configmap
+    data:
+      db-load-script.sql: |
+        USE ecomdb;
+        CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name varchar(255) default NULL,Price varchar(255) default NULL, ImageUrl varchar(255) default NULL,PRIMARY KEY (id)) AUTO_INCREMENT=1;
+        INSERT INTO products (Name,Price,ImageUrl) VALUES ("Laptop","100","c-1.png"),("Drone","200","c-2.png"),("VR","300","c-3.png"),("Tablet","50","c-5.png"),("Watch","90","c-6.png"),("Phone Covers","20","c-7.png"),("Phone","80","c-8.png"),("Laptop","150","c-4.png");
+    ```
 
 - Mount the ConfigMap as a volume in the Pod
 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: my-pod
-spec:
-  containers:
-    - name: my-container
-      image: my-image
-      volumeMounts:
+    ```yaml
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: my-pod
+    spec:
+      containers:
+        - name: my-container
+          image: my-image
+          volumeMounts:
+            - name: script-volume
+              mountPath: /scripts
+      volumes:
         - name: script-volume
-          mountPath: /scripts
-  volumes:
-    - name: script-volume
-      configMap:
-        name: db-load-script-configmap
-```
+          configMap:
+            name: db-load-script-configmap
+    ```
 
-- Execute the script inside the container
+#### Option 2: Copy the script to the Docker image
 
-```shell
-#!/bin/bash
-/scripts/my-script.sh
-```
+When a container is started for the first time, a new database with the specified name will be created and initialized
+with the provided configuration variables.
+
+Furthermore, it will execute files with extensions .sh, .sql, .sql.gz,
+.sql.xz and .sql.zst that are found in `/docker-entrypoint-initdb.d`.
+
+Ref:
+
+- [Environment Variables](https://hub.docker.com/_/mariadb)
+- [Initializing the database contents | MariaDB - Docker Official Image](https://hub.docker.com/_/mariadb)
