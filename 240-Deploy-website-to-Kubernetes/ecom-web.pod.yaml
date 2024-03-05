@@ -8,7 +8,7 @@ metadata:
 spec:
   containers:
     - name: ecom-web-pod
-      image: lethang7794/ecom-web:v1
+      image: lethang7794/ecom-web:v2
       env:
         - name: "DB_USER"
           value: "db_user"
