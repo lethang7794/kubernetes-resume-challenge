@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-web-deploy
+  labels:
+    app: ecom-app
+    name: ecom-web-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: ecom-web-pod
+      app: ecom-app
+  template:
+    metadata:
+      name: ecom-web-pod
+      labels:
+        name: ecom-web-pod
+        app: ecom-app
+    spec:
+      containers:
+        - name: ecom-web-pod
+          image: lethang7794/ecom-web:v2
+          env:
+            - name: "DB_USER"
+              value: "db_user"
+            - name: "DB_PASSWORD"
+              value: "password"
+            - name: "DB_NAME"
+              value: "ecomdb"
