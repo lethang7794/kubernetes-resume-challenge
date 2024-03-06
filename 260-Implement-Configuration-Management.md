@@ -57,8 +57,53 @@
 
 ## Use ConfigMaps
 
+```yaml
+# feature-toggle.configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: feature-toggle-config
+data:
+  DARK_MODE: "true"
+```
+
 ## Deploy ConfigMap
+
+- Apply ConfigMap
+
+```shell
+cd 260-Implement-Configuration-Management
+kubectl apply -f feature-toggle.configmap.yaml
+```
 
 ## Update Deployment
 
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-web-deploy
+spec:
+  template:
+    spec:
+      containers:
+        - name: ecom-web-pod
+          image: lethang7794/ecom-web:v3
+          env:
+            - name: "FEATURE_DARK_MODE"
+              valueFrom:
+                configMapKeyRef:
+                  name: "feature-toggle-config"
+                  key: "DARK_MODE"
+```
+
+```shell
+cd 260-Implement-Configuration-Management
+kubectl apply -f ecom-web.deploy.yaml
+```
+
 ## Outcome
+
+- Delete the old pod to see if everything works.
+
+- Change the ConfigMap (& apply new the ConfigMap), delete the old pod, to verify the app can get new value.

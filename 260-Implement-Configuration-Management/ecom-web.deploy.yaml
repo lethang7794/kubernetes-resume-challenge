@@ -29,4 +29,7 @@ spec:
             - name: "DB_NAME"
               value: "ecomdb"
             - name: "FEATURE_DARK_MODE"
-              value: "true"
+              valueFrom:
+                configMapKeyRef:
+                  name: "feature-toggle-config"
+                  key: "DARK_MODE"
