@@ -35,41 +35,6 @@ status:
   desiredReplicas: 0
 ```
 
-This HPA object apiVersion is `autoscaling/v1`, which doesn't work for me.
-
-The version works for me is `autoscaling/v2`.
-
-```yaml
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  creationTimestamp: null
-  name: ecom-web-deploy
-spec:
-  maxReplicas: 10
-  minReplicas: 2
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: ecom-web-deploy
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 50
-  behavior: # Default behavior: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#default-behavior
-    scaleUp:
-      stabilizationWindowSeconds: 0
-    scaleDown:
-      stabilizationWindowSeconds: 300
-status:
-  currentReplicas: 0
-  desiredReplicas: 0
-
-```
-
 ## Apply HPA
 
 ```shell
@@ -106,4 +71,71 @@ Currently, although the HPA is created with a min of pods,
 
 The HPA doesn't know the CPU utilization of pods, so it doesn't tell the Deployment object to scale down.
 
-> How long before HPA scale up & down?
+This HPA object apiVersion is `autoscaling/v1`, which doesn't work for me.
+
+To have HPA works, I need to do 2 things:
+
+1. Use version `autoscaling/v2` of HPA
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  creationTimestamp: null
+  name: ecom-web-deploy
+spec:
+  maxReplicas: 10
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ecom-web-deploy
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  behavior: # Default behavior: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#default-behavior
+    scaleUp:
+      stabilizationWindowSeconds: 0
+    scaleDown:
+      stabilizationWindowSeconds: 300
+status:
+  currentReplicas: 0
+  desiredReplicas: 0
+```
+
+2. Add resources requests/limit to container spec template
+
+```yaml
+spec:
+  template:
+    spec:
+      containers:
+        - name: ecom-web-pod
+          image: lethang7794/ecom-web:v5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+```
+
+### How long before HPA scale up & down?
+
+1. For scaling up there is no stabilization window
+
+- When the metrics indicate that the target should be scaled up the target is scaled up immediately.
+
+- There are 2 policies where:
+
+  - 4 pods or
+  - a 100% of the currently running replicas
+
+  may at most be added every 15 seconds till the HPA reaches its steady state.
+
+2. For scaling down the stabilization window is 300 seconds.
