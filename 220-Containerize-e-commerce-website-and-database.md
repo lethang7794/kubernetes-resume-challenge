@@ -45,7 +45,7 @@ EXPOSE 80
 
 ```shell
 cd 220-Containerize-e-commerce-website-and-database/learning-app-ecommerce
-docker build -t lethang7794/ecom-web:v2 .
+docker build -t lethang7794/ecom-web:v5 .
 ```
 
 - Make sure command is not saved int the history
@@ -65,7 +65,7 @@ docker login
 - Push the image
 
 ```shell
-docker push lethang7794/ecom-web:v2
+docker push lethang7794/ecom-web:v5
 ```
 
 The image is available at Docker
