@@ -9,3 +9,59 @@
    response.
 4. **Outcome**: Kubernetes automatically restarts unresponsive pods and delays traffic to newly started pods until
    they're ready, enhancing the application's reliability and availability.
+
+## Define Probes
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-web-deploy
+spec:
+  selector:
+    matchLabels:
+      name: ecom-web-deploy
+  template:
+    spec:
+      containers:
+        - name: ecom-web-pod
+          image: lethang7794/ecom-web:v5
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+            initialDelaySeconds: 10
+            periodSeconds: 5
+```
+
+## Apply Changes
+
+```shell
+cd 2110-Implement-Liveness-and-Readiness-Probes
+kubectl apply -f ecom-web.deploy.yaml
+```
+
+## Test Probes
+
+Go inside a container
+
+```shell
+kubectl exec -it <POD_NAME> -- bash
+```
+
+Shutdown it
+
+```shell
+kill -s TERM 1
+```
+
+Watch the pod restart automatically
+
+```shell
+kubectl get deploy,pods
+```
