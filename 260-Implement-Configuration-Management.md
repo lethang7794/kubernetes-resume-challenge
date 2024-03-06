@@ -11,6 +11,50 @@
 
 ## Modify the Web Application
 
+- Modify the code
+
+    ```
+    <?php
+    $FEATURE_DARK_MODE = getenv('FEATURE_DARK_MODE');
+    if ($FEATURE_DARK_MODE === 'true') {
+        echo "<h2>Dark mode is on</h2>";
+    } else {
+        echo "<h2>Dark mode is off</h2>";
+    }
+    ?>
+    ```
+
+- Verify that the code works depends on the environment
+    - Build a new docker image (local)
+        ```shell
+        cd 220-Containerize-e-commerce-website-and-database/learning-app-ecommerce
+        docker build -t lethang7794/ecom-web:v3 .
+        ```
+    - Verify that the code works by run the container and pass in the environment variable
+
+        ```shell
+        docker run --env 'FEATURE_DARK_MODE=true' -p 8080:80  lethang7794/ecom-web:v3
+        ```
+    - Verify that the deployment can pass environment to the container
+
+        ```yaml
+        spec:
+          template:
+            metadata:
+            spec:
+              containers:
+                - name: ecom-web-pod
+                  image: lethang7794/ecom-web:v3
+                  env:
+                    - name: "FEATURE_DARK_MODE"
+                      value: "true"
+        ```
+
+        ```shell
+        cd 260-Implement-Configuration-Management
+        kubectl apply -f ecom-web.deploy.yaml
+        ```
+
 ## Use ConfigMaps
 
 ## Deploy ConfigMap
