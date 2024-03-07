@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-web-deploy
+  labels:
+    app: ecom-app
+    name: ecom-web-deploy
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      name: ecom-web-pod
+      app: ecom-app
+  template:
+    metadata:
+      name: ecom-web-pod
+      labels:
+        name: ecom-web-pod
+        app: ecom-app
+    spec:
+      containers:
+        - name: ecom-web-pod
+          image: lethang7794/ecom-web:v5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: "DB_USER"
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_USER"
+            - name: "DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "db-secret"
+                  key: "DB_PASSWORD"
+            - name: "DB_NAME"
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_DATABASE"
+            - name: "FEATURE_DARK_MODE"
+              valueFrom:
+                configMapKeyRef:
+                  name: "feature-toggle-config"
+                  key: "DARK_MODE"
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+            initialDelaySeconds: 10
+            periodSeconds: 5
