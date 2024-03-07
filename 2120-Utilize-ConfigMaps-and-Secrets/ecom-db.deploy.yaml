@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecom-db-deploy
+  labels:
+    app: ecom-app
+    name: ecom-db-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ecom-app
+      name: ecom-db-pod
+  template:
+    metadata:
+      name: ecom-db-pod
+      labels:
+        name: ecom-db-pod
+        app: ecom-app
+    spec:
+      containers:
+        - name: ecom-db-pod
+          image: lethang7794/ecom-db:v1
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_USER"
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "db-secret"
+                  key: "DB_PASSWORD"
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "db-secret"
+                  key: "DB_ROOT_PASSWORD"
+            - name: MARIADB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_DATABASE"
