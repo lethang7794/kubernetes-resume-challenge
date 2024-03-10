@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: ecom-web-pod
-          image: lethang7794/ecom-web:v2
+          image: lethang7794/ecom-web:v3
           env:
             - name: "DB_USER"
               value: "db_user"
@@ -28,3 +28,8 @@ spec:
               value: "password"
             - name: "DB_NAME"
               value: "ecomdb"
+            - name: "FEATURE_DARK_MODE"
+              valueFrom:
+                configMapKeyRef:
+                  name: "feature-toggle-config"
+                  key: "DARK_MODE"
