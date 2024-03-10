@@ -6,7 +6,7 @@ metadata:
     app: ecom-app
     name: ecom-web-deploy
 spec:
-  replicas: 1
+  replicas: 6
   selector:
     matchLabels:
       name: ecom-web-pod
