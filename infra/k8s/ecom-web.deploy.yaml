@@ -40,3 +40,14 @@ spec:
                 configMapKeyRef:
                   name: "feature-toggle-config"
                   key: "DARK_MODE"
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /
+            initialDelaySeconds: 10
+            periodSeconds: 5
