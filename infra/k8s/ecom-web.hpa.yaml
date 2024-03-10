@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   creationTimestamp: null
-  name: ecom-web-deploy
+  name: ecom-web-hpa
 spec:
   maxReplicas: 10
   minReplicas: 2
