@@ -29,6 +29,11 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           env:
+            - name: "DB_HOST"
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_HOST"
             - name: "DB_USER"
               valueFrom:
                 configMapKeyRef:
