@@ -25,10 +25,22 @@ spec:
             - containerPort: 3306
           env:
             - name: MARIADB_USER
-              value: "db_user"
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_USER"
             - name: MARIADB_PASSWORD
-              value: "password"
+              valueFrom:
+                secretKeyRef:
+                  name: "db-secret"
+                  key: "DB_PASSWORD"
             - name: MARIADB_ROOT_PASSWORD
-              value: "root_password"
+              valueFrom:
+                secretKeyRef:
+                  name: "db-secret"
+                  key: "DB_ROOT_PASSWORD"
             - name: MARIADB_DATABASE
-              value: "ecomdb"
+              valueFrom:
+                configMapKeyRef:
+                  name: "db-config"
+                  key: "DB_DATABASE"
