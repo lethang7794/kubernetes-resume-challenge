@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: db-config
 data:
-  DB_HOST: "mysql_service" # Name of the K8s service that expose db
+  DB_HOST: "mysql-service" # Name of the K8s service that expose db
   DB_USER: "db_user"
   DB_DATABASE: "ecomdb"
   
