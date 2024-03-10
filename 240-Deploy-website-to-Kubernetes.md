@@ -39,7 +39,7 @@ spec:
     - name: ecom-db-pod
       image: lethang7794/ecom-db:v1
       ports:
-        - containerPort: 3036
+        - containerPort: 3306
       env:
         - name: MARIADB_DATABASE
           value: "ecomdb"
@@ -65,8 +65,8 @@ kubectl apply -f "./ecom-db.pod.yaml"
         app: ecom-app
       ports:
         - protocol: TCP
-          port: 3036
-          targetPort: 3036
+          port: 3306
+          targetPort: 3306
       type: ClusterIP
       
     ```
