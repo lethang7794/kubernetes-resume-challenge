@@ -156,6 +156,7 @@ rm -rf mychart/templates/*
       `# Source: ...`
 
 - Cleanup our chart
+
   ```bash
   helm uninstall mychart-1710232106
   ```
@@ -254,6 +255,7 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
   ```
 
   The output will contains 2 things of the release:
+
   - Status
   - Manifest
 
@@ -283,6 +285,7 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
   ```
 
   There are a lot of information here:
+
   - **Chart version/path**
   - Release status
   - **Computed values**
@@ -292,7 +295,7 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
   ```
   install.go:214: [debug] Original chart version: ""
   install.go:231: [debug] CHART PATH: /home/lqt/go/src/github.com/lethang7794/kubernetes-resume-challenge/mychart
-  
+
   client.go:142: [debug] creating 1 resource(s)
   NAME: mychart-1710239005
   LAST DEPLOYED: Tue Mar 12 17:23:25 2024
@@ -302,7 +305,7 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
   TEST SUITE: None
   USER-SUPPLIED VALUES:
   {}
-  
+
   COMPUTED VALUES:
   affinity: {}
   autoscaling:
@@ -353,7 +356,7 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
   tolerations: []
   volumeMounts: []
   volumes: []
-  
+
   HOOKS:
   MANIFEST:
   ---
@@ -366,10 +369,11 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
     myvalue: "Hello World"
   ```
 
-[^manifest]: https://helm.sh/docs/helm/helm_get_manifest/
+### What's next
 
-[^go-template]: https://pkg.go.dev/text/template
+See [Build-in objects](./2142-helm-buildin-objects.md)
 
-[^build-in-objects]: https://helm.sh/docs/chart_template_guide/builtin_objects/
-
-[^helm-template]: https://helm.sh/docs/chart_template_guide/functions_and_pipelines/
+[^manifest]: <https://helm.sh/docs/helm/helm_get_manifest/>
+[^go-template]: <https://pkg.go.dev/text/template>
+[^build-in-objects]: <https://helm.sh/docs/chart_template_guide/builtin_objects/>
+[^helm-template]: <https://helm.sh/docs/chart_template_guide/functions_and_pipelines/>
