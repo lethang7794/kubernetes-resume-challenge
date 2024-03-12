@@ -27,7 +27,7 @@
 
 - In the template, use value `coffee` via `.Values.favoriteDrink`
 
-  ```
+  ```yaml
   apiVersion: v1
   kind: ConfigMap
   metadata:
@@ -110,19 +110,57 @@
 
 - Values file can contain more structured content
 
-```yaml
-favorite:
-  drink: coke
-  food: pizza
-```
+  ```yaml
+  # mychart/templates/values.yaml
+  favorite:
+    drink: coke
+    food: pizza
+  ```
 
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-configmap
-data:
-  myvalue: "Hello World"
-  drink: {{ .Values.favorite.drink }}
-  food: {{ .Values.favorite.food }}
-```
+  ```yaml
+  # mychart/templates/yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: {{ .Release.Name }}-configmap
+  data:
+    myvalue: "Hello World"
+    drink: {{ .Values.favorite.drink }}
+    food: {{ .Values.favorite.food }}
+  ```
+
+  ```shell
+  helm install ./mychart --generate-name --debug
+  ```
+
+  ```
+  install.go:214: [debug] Original chart version: ""
+  install.go:231: [debug] CHART PATH: /home/lqt/go/src/github.com/lethang7794/kubernetes-resume-challenge/mychart
+  
+  client.go:142: [debug] creating 1 resource(s)
+  NAME: mychart-1710254482
+  LAST DEPLOYED: Tue Mar 12 21:41:22 2024
+  NAMESPACE: default
+  STATUS: deployed
+  REVISION: 1
+  TEST SUITE: None
+  USER-SUPPLIED VALUES:
+  {}
+  
+  COMPUTED VALUES:
+  favorite:
+    drink: coke
+    food: pizza
+  
+  HOOKS:
+  MANIFEST:
+  ---
+  # Source: mychart/templates/configmap.yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: mychart-1710254482-configmap
+  data:
+    drink: coke
+    food: pizza
+  ```
