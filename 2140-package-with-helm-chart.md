@@ -32,6 +32,8 @@ created
 >
 > To find new charts, you can search Helm chart _repositories_.
 
+For more information about concepts of Helms, see [Glossary | Helm][^Helm Glossary]
+
 ## Helm prerequisites
 
 - [x] A Kubernetes cluster
@@ -329,85 +331,7 @@ LICENSE
 
 ## Create your own Helm Chart
 
-### `helm create`: Create a new Helm Chart
-
-```bash
-helm create mychart
-```
-
-Let's see what we got
-
-```bash
-tree mychart
-```
-
-```text
-mychart
-├── charts
-├── Chart.yaml
-├── templates
-│   ├── deployment.yaml
-│   ├── _helpers.tpl
-│   ├── hpa.yaml
-│   ├── ingress.yaml
-│   ├── NOTES.txt
-│   ├── serviceaccount.yaml
-│   ├── service.yaml
-│   └── tests
-│       └── test-connection.yaml
-└── values.yaml
-```
-
-There are a lot of stuffs here.
-
-Let's install our chart and see what exactly our release is.
-
-```bash
- helm install ./mychart/ --generate-name
-```
-
-```text
-NAME: mychart-1710165841
-LAST DEPLOYED: Mon Mar 11 21:04:01 2024
-NAMESPACE: default
-STATUS: deployed
-REVISION: 1
-NOTES:
-1. Get the application URL by running these commands:
-  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=mychart,app.kubernetes.io/instance=mychart-1710165841" -o jsonpath="{.items[0].metadata.name}")
-  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
-```
-
-Let's compare to chart template for `NOTES.txt`
-
-```
-1. Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
-  {{- end }}
-{{- end }}
-{{- else if contains "NodePort" .Values.service.type }}
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "mychart.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.service.type }}
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "mychart.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "mychart.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.service.port }}
-{{- else if contains "ClusterIP" .Values.service.type }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "mychart.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
-{{- end }}
-```
-
----
+See [Create Helm Chart](2141-create-your-helm-chart.md)
 
 [^Install Helm]: https://helm.sh/docs/intro/install/
 
@@ -418,3 +342,5 @@ Let's compare to chart template for `NOTES.txt`
 [^SemVer 2]: https://semver.org/spec/v2.0.0.html
 
 [^Introducing The Artifact Hub]: https://codeengineered.com/blog/2020/artifact-hub/
+
+[^Helm Glossary]: https://helm.sh/docs/glossary/
