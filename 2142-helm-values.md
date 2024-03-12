@@ -1,8 +1,10 @@
 # Helm - Values Files
 
+## Where are values from?
+
 - The top-level `Values` object content come from multiple sources:
 
-  - The chart's `values.yaml` file
+  - The chart's `values.yaml` file (a.k.a _default values_)
   - The parent chart's `values.yaml` file (for a subchart)
   - A user-supplied values file passed with `-f` flag (to `helm install`/`helm upgrade`)
 
@@ -12,7 +14,7 @@
 
     e.g. `helm install ./mychart --generate-name --set foo=bar`
 
-  These sources list are in order of increasing precedence. The latter can take precedence over the former.
+- These sources list are in order of increasing precedence. The latter can take precedence over the former.
 
 - Values file are in YAML format.
 
@@ -108,16 +110,18 @@
     drink: milk
   ```
 
-- Values file can contain more structured content
+## Values file can contain structured content
 
+- The `values.yaml` with structured content
   ```yaml
   # mychart/templates/values.yaml
   favorite:
     drink: coke
     food: pizza
   ```
+- Use both fields of the object
 
-  ```yaml
+  ```
   # mychart/templates/yaml
   apiVersion: v1
   kind: ConfigMap
@@ -128,6 +132,8 @@
     drink: {{ .Values.favorite.drink }}
     food: {{ .Values.favorite.food }}
   ```
+
+- Let's see what we got
 
   ```shell
   helm install ./mychart --generate-name --debug
@@ -163,4 +169,42 @@
   data:
     drink: coke
     food: pizza
+  ```
+
+## Delete a default value
+
+Sometimes we don't want a default _value_ or even the value _key_.
+
+In that case, we override the value of the key with `null`, so Helm will remove that key from the overridden merged
+values.
+
+e.g.
+
+- The default values of `stable/drupal` chart
+
+  ```yaml
+  livenessProbe:
+    httpGet:            # We don't need this key or its children
+      path: /user/login #
+      port: http        #
+    initialDelaySeconds: 120
+  ```
+- What we need
+
+  ```yaml
+  livenessProbe:
+    exec:
+      command:
+        - cat
+        - docroot/CHANGELOG.txt
+    initialDelaySeconds: 120
+  ```
+
+- What we do
+
+  ```shell
+  helm install stable/drupal \
+    --set image=my-registry/drupal:0.1.0 \
+    --set livenessProbe.exec.command=[cat,docroot/CHANGELOG.txt] \ # Provide additional values/keys
+    --set livenessProbe.httpGet=null                               # Delete what we don't need
   ```
