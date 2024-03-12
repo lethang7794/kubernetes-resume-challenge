@@ -31,9 +31,34 @@ When everything works, we will choose one 1 provider and deploy another environm
   🐳  Preparing Kubernetes v1.28.3 on Docker 24.0.7 ...
   ...
   🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
-  ```  
+  ```
+- Or start minikube with Podman & rooless
 
-  Confirm minikube is working
+  ```bash
+  minikube start --driver=podman --container-runtime=cri-o
+  ```
+
+---
+
+> `Error: ImageInspectError` - `Failed to inspect image "nginx:1.16.0": rpc error: code = Unknown desc = short-name "nginx:1.16.0" did not resolve to an alias and no unqualified
+-search registries are defined in "/etc/containers/registries.conf"`
+
+- SSH into minikube cluster control plane
+
+  ```shell
+  minikube ssh
+  ```
+
+- Update containers registries.conf
+
+  ```bash
+  # /etc/containers/registries.conf
+  unqualified-search-registries = ["docker.io"]
+  ```
+
+---
+
+- Confirm minikube is working
 
     ```shell
     minikube status
@@ -47,7 +72,8 @@ When everything works, we will choose one 1 provider and deploy another environm
     apiserver: Running
     kubeconfig: Configured
     ```
-  Config kubectl works with minikube
+
+- Confirm kubectl works with minikube
 
     ```shell
     kubectl cluster-info
