@@ -207,6 +207,15 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
 
 > [!TIP]
 > Under the hood[^helm-template], Helm use Go template[^go-template].
+>
+> Helm `template directive` is Go template `action`. (Why so many names? 😭)
+>
+> > "A template directive is enclosed in {{ and }} blocks." - Helm docs[^helm-template-directive]
+>
+> > "Actions" -- data evaluations or control structures -- are delimited by "{{" and "}} - Go template docs[^go-template-action].
+
+> [!TIP]
+> For more information, see [Go template actions][^go-template-actions]
 
 - Install our chart many times
 
@@ -374,6 +383,15 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
 See [Build-in objects](./2142-helm-buildin-objects.md)
 
 [^manifest]: <https://helm.sh/docs/helm/helm_get_manifest/>
+
 [^go-template]: <https://pkg.go.dev/text/template>
+
 [^build-in-objects]: <https://helm.sh/docs/chart_template_guide/builtin_objects/>
+
 [^helm-template]: <https://helm.sh/docs/chart_template_guide/functions_and_pipelines/>
+
+[^go-template-action]: https://pkg.go.dev/text/template#pkg-overview
+
+[^go-template-actions]: https://pkg.go.dev/text/template#hdr-Actions
+
+[^helm-template-directive]: https://helm.sh/docs/chart_template_guide/getting_started/#adding-a-simple-template-call
