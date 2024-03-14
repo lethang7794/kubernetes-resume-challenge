@@ -141,6 +141,8 @@ In Helm template language, `with` set the current scope (`.`) to a particular ob
 > release: {{ $.Release.Name }}
 > {{- end }}
 > ```
+>
+> - Use a `variable` (See [Variables section](2147-helm-variables.md#when-to-use-a-variable))
 
 ## `range` function
 
@@ -163,11 +165,12 @@ In Helm template language, the way to iterate through a collection is to use the
 
 - Then, in our template, we _**range over**_ (iterate through) the list (called `slice` in Go),
   
-  ```
+  ```yaml
+  # template.yaml
   toppings: |-
-  {{- range.Values.pizzaToppings }}
-  - {{ .| title | quote }}
-  {{- end }}
+    {{- range.Values.pizzaToppings }}
+    - {{ .| title | quote }}
+    {{- end }}
   ```
   
   Each time through the loop, `.` is set to the _current_ pizza topping
@@ -175,6 +178,7 @@ In Helm template language, the way to iterate through a collection is to use the
 - If the template are executed, we'll got
   
   ```yaml
+  # Output:
   toppings: |-
     - "Mushrooms"
     - "Cheese"

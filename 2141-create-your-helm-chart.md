@@ -174,7 +174,7 @@ helm install ./mychart --generate-name
 Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-configmap" in namespace "default" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "mychart-1710233795": current value is "mychart-1710233793"
 ```
 
-### Create a template that can be install many times
+### Create a template that can be installed many times
 
 - Let's use the release name as a part of our ConfigMap name
 
