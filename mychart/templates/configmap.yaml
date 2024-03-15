@@ -1,9 +1,11 @@
+# /mychart/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-configmap
-  labels:
-    {{ template "mychart.app" . }}
 data:
-  myValue: "Hello World"
-  {{ template "mychart.app" . }}
+  {{- $files := .Files }}
+  {{- range tuple "config1.toml" "config2.toml" "config3.toml" }}
+  {{ . }}: |-
+    {{ $files.Get . }}
+  {{- end }}
