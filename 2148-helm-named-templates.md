@@ -371,3 +371,61 @@ Just like `template` action, include has 2 syntax
 >   myAppName: mychart
 > myAppVersion: "0.1.0"
 > ```
+
+## Which named template function to use?
+
+- To create a template, use `define`
+- To use a template, favor `include` (over `template` & `block`)
+
+## Why use `include` instead of `template`?
+
+- `include` can be passed to functions in a pipeline.
+- `include` can dynamically reference templates.
+  
+  You can provide the name as a variable, and include will dereference that variable.
+  
+  - e.g. `{{ include $mytemplate }}`
+  
+  The `template` function, in contrast, will only accept a string literal.
+
+## Why use `include` instead of `block`?
+
+The main reason `block` is used is because of its ability to provide a default implementation that can be overridden later.
+
+But if there are many `block`s, the default implementation is unpredictable.
+
+The suggestion is a combination of
+
+- `define` + `default`
+- `include`
+
+e.g.
+
+- The implementation with default via `define` & `default`
+  
+  ```kubernetes helm
+  # _helpers.tpl
+  {{- define "my-chart.fullname" -}}
+  {{- default .Release.Name "default" -}}
+  {{- end -}}
+  ```
+
+- Use the value with `include`
+  
+  ```kubernetes helm
+  # deployment.yaml
+  env:
+    - name: DB_USERNAME
+      value: {{ include "my-chart.fullname" . }}-db-username
+    - name: DB_PASSWORD
+      value: {{ include "my-chart.fullname" . }}-db-password
+  ```
+
+- Override values
+  
+  ```kubernetes helm
+  # values.yaml
+  database:
+    username: custom_user
+    password: custom_password
+  ```

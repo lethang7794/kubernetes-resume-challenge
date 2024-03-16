@@ -1,3 +1,9 @@
 favorite:
   drink: coke
   food: pizza
+
+mysubchart:
+  dessert: "ice cream"
+
+global:
+  salad: caesar
