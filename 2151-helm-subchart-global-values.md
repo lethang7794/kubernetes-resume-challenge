@@ -46,3 +46,9 @@ cd mychart/charts && helm create mysubchart
 
 ### Add values & templates to subchart
 
+Let's start the subchart from scratch
+
+```bash
+cd mychart/charts && echo > mysubchart/values.yaml
+cd mychart/charts && rm -rf mysubchart/templates/*
+```
