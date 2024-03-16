@@ -64,9 +64,15 @@ Helm template language reuses 3 action from Go template language:
 
 - `define` action: create a new named template inside of a template file
 - `template` action: use a named template
-- `block` action: declares a special kind of fill-able template area
+- ~~`block`
+  action~~ (NOT RECOMMENDED): declares a special kind of fill-able template area (that can be overridden later)
 
 Helm also adds an extra action for named template, it's `include` function.
+
+> [!CAUTION]
+> The `block` action is from Go template.
+>
+> In Helm template, don't use `block` action, instead use `include` function.
 
 > [!WARNING]
 > Template names are global.
@@ -274,7 +280,13 @@ e.g.
       version: 0.1.0
   ```
 
-### `block` action
+### `block` action: Use `include` instead
+
+In Go template language, `block` action allows developers to provide a default implementation which is overridden later.
+
+In Helm charts, `block`s are not the best tool for overriding because if multiple implementations of the same block are provided, the one selected is unpredictable.
+
+The suggestion is to instead use `include`.
 
 ### `include` action: import a named template into the present pipeline (where it can be passed along to other functions in the pipeline)
 
@@ -359,4 +371,3 @@ Just like `template` action, include has 2 syntax
 >   myAppName: mychart
 > myAppVersion: "0.1.0"
 > ```
-
