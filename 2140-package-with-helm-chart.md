@@ -24,8 +24,7 @@ Config
 
 Release
 : A running instance of a _chart_, combined with a specific _config_.
-: One chart can often be installed many times into the same cluster. And each time it is installed, a new release is
-created
+: One chart can often be installed many times into the same cluster. And each time it is installed, a new release is created
 : e.g. A MySQL chart can be installed twice to have 2 databases running in the K8s cluster.
 
 > Helm installs _charts_ into Kubernetes, creating a new _release_ for each installation.
@@ -99,31 +98,30 @@ helm search hub mysql
 
 ### Install an Example Chart
 
-Whenever you install a chart, a new release is created. So one chart can be installed multiple times into the same
-cluster. And each can be independently managed and upgraded.
+Whenever you install a chart, a new release is created. So one chart can be installed multiple times into the same cluster. And each can be independently managed and upgraded.
 
 Let's install a chart:
 
 - [Optional] Update data of repositories
-
+  
   ```bash
   helm repo update # So we can have the latest available charts
   ```
 
 - Install a Helm Chart
-
+  
   - We need to provide a name for the release
-
+    
     ```bash
     helm install my-mysql bitnami/mysql # this name should be unique
     ```
-
+  
   - Or let helm generate a name for the release
-
+    
     ```bash
     helm install          bitnami/mysql --generate-name # So we can install a helm chart many times into a cluster (without naming our release)
     ```
-
+    
     ```text
     NAME: mysql-1710079919
     LAST DEPLOYED: Sun Mar 10 21:12:02 2024
@@ -328,6 +326,31 @@ NOTES.txt
 
 LICENSE
 : A plain text file containing the license for the chart.
+
+## What exactly happen when you install a Helm chart?
+
+In high-level:
+
+- You tell Helm to install the application described by the chart (with your configuration) to your Kubernetes cluster.
+- Helm install that application.
+
+In low-level:
+
+- You provides to `Helm Client`
+  - the chart
+  - the configuration
+  
+  `helm install <CHART_NAME> <CONFIGURATION>`
+
+- `Helm Client` send them (chart & configuration) to `Helm Libary`
+
+- `Helm Library`:
+  - Combine chart's templates + configuration to manifest, which will be a part of the release
+  - Install the manifest to Kubernetes cluster
+  - Create its `release` object (internal to Helm) & store it in Kubernetes Secret object.
+  - Send back information to `Helm Client`
+
+- `Helm Libary`shows status of the chart to you.
 
 ## Create your own Helm Chart
 
