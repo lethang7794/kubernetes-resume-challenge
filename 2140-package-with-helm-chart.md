@@ -352,6 +352,11 @@ In low-level:
 
 - `Helm Libary`shows status of the chart to you.
 
+--- 
+
+![helm3-architecture.png](helm3-architecture.png)
+Helm 3 architecture[^helm3-architecture]
+
 ## Create your own Helm Chart
 
 See [Create Helm Chart](2141-create-your-helm-chart.md)
@@ -367,3 +372,5 @@ See [Create Helm Chart](2141-create-your-helm-chart.md)
 [^Introducing The Artifact Hub]: https://codeengineered.com/blog/2020/artifact-hub/
 
 [^Helm Glossary]: https://helm.sh/docs/glossary/
+
+[^helm3-architecture]: https://developer.ibm.com/blogs/kubernetes-helm-3/
