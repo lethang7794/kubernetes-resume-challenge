@@ -2,10 +2,7 @@
 
 ## Step 1: Certification
 
-**KodeKloud CKAD Course**: To ensure you have a solid understanding of Kubernetes concepts and practical experience,
-complete
-the [Certified Kubernetes Application Developer (CKAD) course by KodeKloud](https://www.kodekloud.com/p/kubernetes-certification-course).
-This course will equip you with the knowledge and skills needed to tackle this challenge effectively.
+**KodeKloud CKAD Course**: To ensure you have a solid understanding of Kubernetes concepts and practical experience, complete the [Certified Kubernetes Application Developer (CKAD) course by KodeKloud](https://www.kodekloud.com/p/kubernetes-certification-course). This course will equip you with the knowledge and skills needed to tackle this challenge effectively.
 
 ## Step 2: Containerize Your E-Commerce Website and Database
 
@@ -13,16 +10,17 @@ This course will equip you with the knowledge and skills needed to tackle this c
 
 1. **Create a Dockerfile**: Navigate to the root of the e-commerce application and create a Dockerfile. This file should
    instruct Docker to:
-    - Use `php:7.4-apache` as the base image.
-    - Install `mysqli` extension for PHP.
-    - Copy the application source code to `/var/www/html/`.
-    - Update database connection strings to point to a Kubernetes service named `mysql-service`.
-    - Expose port `80` to allow traffic to the web server.
+
+   - Use `php:7.4-apache` as the base image.
+   - Install `mysqli` extension for PHP.
+   - Copy the application source code to `/var/www/html/`.
+   - Update database connection strings to point to a Kubernetes service named `mysql-service`.
+   - Expose port `80` to allow traffic to the web server.
 
 2. **Build and Push the Docker Image**:
-    - Execute `docker build -t yourdockerhubusername/ecom-web:v1 .` to build your image.
-    - Push it to Docker Hub with `docker push yourdockerhubusername/ecom-web:v1`.
-    - **Outcome**: Your web application Docker image is now available on Docker Hub.
+   - Execute `docker build -t yourdockerhubusername/ecom-web:v1 .` to build your image.
+   - Push it to Docker Hub with `docker push yourdockerhubusername/ecom-web:v1`.
+   - **Outcome**: Your web application Docker image is now available on Docker Hub.
 
 ### B. Database Containerization
 
@@ -149,3 +147,31 @@ Add links to the Cloud Resume Challenge and KodeKloud sites as in the following.
   simulations tailored towards DevOps, Cloud, and software engineering practices. KodeKloud is an ideal resource for
   both beginners and experienced professionals looking to enhance their technical skills. Explore more
   at [KodeKloud](https://kodekloud.com/).
+
+## Extra credit
+
+### Package Everything in Helm
+
+**Task**: Utilize Helm to package your application, making deployment and management on Kubernetes clusters more efficient and scalable.
+
+1. **Create Helm Chart**: Start by creating a Helm chart for your application. This involves setting up a chart directory with the necessary templates for your Kubernetes resources.
+2. **Define Values**: Customize your application deployment by defining variables in the `values.yaml` file. This allows for flexibility and reusability of your Helm chart across different environments or configurations.
+3. **Package and Deploy**: Use Helm commands to package your application into a chart and deploy it to your Kubernetes cluster. Ensure to test your chart to verify that all components are correctly configured and working as expected.
+4. **Outcome**: Your application is now packaged as a Helm chart, simplifying deployment processes and enabling easy versioning and rollback capabilities.
+
+For more details, follow [KodeKloud Helm Course](https://kodekloud.com/courses/helm-for-beginners/).
+
+### Implement Persistent Storage
+
+**Task**: Ensure data persistence for the MariaDB database across pod restarts and re-deployments.
+
+1. **Create a PVC**: Define a PersistentVolumeClaim for MariaDB storage needs.
+2. **Update MariaDB Deployment**: Modify the deployment to use the PVC for storing database data.
+3. **Outcome**: Database data persists beyond the lifecycle of MariaDB pods, ensuring data durability.
+
+### Implement Basic CI/CD Pipeline
+
+**Task**: Automate the build and deployment process using GitHub Actions.
+
+1. **GitHub Actions Workflow**: Create a `.github/workflows/deploy.yml` file to build the Docker image, push it to Docker Hub, and update the Kubernetes deployment upon push to the main branch.
+2. **Outcome**: Changes to the application are automatically built and deployed, showcasing an efficient CI/CD pipeline.
