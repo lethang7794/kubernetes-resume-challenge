@@ -60,3 +60,11 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+
+{{/*
+Return the secret with MariaDB credentials
+*/}}
+{{- define "mariadb.secretName" -}}
+    {{- printf "%s" (include "mariadb.fullname" .) -}}
+{{- end -}}

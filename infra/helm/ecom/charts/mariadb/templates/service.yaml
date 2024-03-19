@@ -8,8 +8,8 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: mariadb
       protocol: TCP
-      name: http
+      name: mariadb
   selector:
     {{- include "mariadb.selectorLabels" . | nindent 4 }}
