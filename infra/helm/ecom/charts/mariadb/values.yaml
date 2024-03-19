@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: lethang7794/ecom-db
+  repository: docker.io/lethang7794/ecom-db
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1"
@@ -60,9 +60,9 @@ ingress:
   #      - chart-example.local
 
 resources: { }
-  # We usually rdbmend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+# We usually rdbmend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
 # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
 # limits:
 #   cpu: 100m
@@ -71,17 +71,17 @@ resources: { }
 #   cpu: 100m
 #   memory: 128Mi
 
-livenessProbe:
-  tcpSocket:
-    port: 80
-  initialDelaySeconds: 10
-  periodSeconds: 5
-readinessProbe:
-  httpGet:
-    port: 80
-    path: /
-  initialDelaySeconds: 10
-  periodSeconds: 5
+#livenessProbe:
+#  tcpSocket:
+#    port: 80
+#  initialDelaySeconds: 10
+#  periodSeconds: 5
+#readinessProbe:
+#  httpGet:
+#    port: 80
+#    path: /
+#  initialDelaySeconds: 10
+#  periodSeconds: 5
 
 autoscaling:
   enabled: false
@@ -113,4 +113,4 @@ auth:
   username: "username"
   password: "password"
   rootPassword: "rootPassword"
-  database: "database"
+  database: "ecomdb"
