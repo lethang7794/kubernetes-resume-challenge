@@ -71,17 +71,17 @@ resources:
     cpu: 100m
     memory: 128Mi
 
-#livenessProbe:
-#  tcpSocket:
-#    port: 80
-#  initialDelaySeconds: 10
-#  periodSeconds: 5
-#readinessProbe:
-#  httpGet:
-#    port: 80
-#    path: /
-#  initialDelaySeconds: 10
-#  periodSeconds: 5
+livenessProbe:
+  tcpSocket:
+    port: 80
+  initialDelaySeconds: 10
+  periodSeconds: 5
+readinessProbe:
+  httpGet:
+    port: 80
+    path: /
+  initialDelaySeconds: 10
+  periodSeconds: 5
 
 autoscaling:
   enabled: true
