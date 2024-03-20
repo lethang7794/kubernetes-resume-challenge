@@ -44,14 +44,14 @@ spec:
             - name: "DB_HOST"
               value: {{ include "wordpress.databaseHost" . | quote }}
             - name: "DB_USER"
-              value: {{ .Values.auth.username | quote }}
+              value: {{ .Values.mariadb.auth.username | quote }}
             - name: "DB_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: {{ template "mariadb.secretName" . }}
                   key: mariadb-password
             - name: "DB_NAME"
-              value: {{ .Values.auth.database | quote }}
+              value: {{ .Values.mariadb.auth.database | quote }}
             - name: "APP_VERSION"
               value: {{ .Values.image.tag | quote }}
             {{- if .Values.extraEnvVars }}
