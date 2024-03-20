@@ -21,6 +21,14 @@
 
         <!-- Theme style CSS -->
         <link href="css/style.css" rel="stylesheet">
+
+        <?php
+        $FEATURE_DARK_MODE = getenv('FEATURE_DARK_MODE');
+        if ($FEATURE_DARK_MODE === 'true') {
+            echo '<link href="css/style-dark.css" rel="stylesheet">';
+        }
+        ?>
+
 <!--        <link href="css/responsive.css" rel="stylesheet">  -->
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -99,7 +107,17 @@
 
         <section class="best_business_area row">
             <div class="check_tittle wow fadeInUp" data-wow-delay="0.7s" id="product-list">
-                <h2>Product List</h2>
+               <?php
+               $FEATURE_DARK_MODE = getenv('FEATURE_DARK_MODE');
+               $APP_VERSION = getenv('APP_VERSION');
+               echo '<h2>Version: ' . $APP_VERSION . '</h2>';
+               if ($FEATURE_DARK_MODE === 'true') {
+                   echo "<h2>Dark mode is on</h2>";
+               } else {
+                   echo "<h2>Dark mode is off</h2>";
+               }
+               ?>
+               <h2>Product List</h2>
             </div>
             <div class="row it_works">
               <?php
