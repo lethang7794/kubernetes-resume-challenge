@@ -54,27 +54,26 @@ kubectl apply -f "./ecom-db.pod.yaml"
 
 - Service that expose `ecom-db` inside the cluster
 
-    ```yaml
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: mysql-service
-    spec:
-      selector:
-        name: ecom-db-pod
-        app: ecom-app
-      ports:
-        - protocol: TCP
-          port: 3306
-          targetPort: 3306
-      type: ClusterIP
-      
-    ```
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: mysql-service
+  spec:
+    selector:
+      name: ecom-db-pod
+      app: ecom-app
+    ports:
+      - protocol: TCP
+        port: 3306
+        targetPort: 3306
+    type: ClusterIP
+  ```
 
-    ```shell
-    cd "240-Deploy-website-to-Kubernetes"
-    kubectl apply -f "./ecom-db.service.yaml"
-    ```
+  ```shell
+  cd "240-Deploy-website-to-Kubernetes"
+  kubectl apply -f "./ecom-db.service.yaml"
+  ```
 
 - Service that expose `ecom-web` outside the cluster
 

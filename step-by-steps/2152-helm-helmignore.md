@@ -16,7 +16,7 @@ The rules of `helmignore` is available in its [Go docs for Helm's `ignore` packa
 e.g.
 
 - An `.helmingore` file
-  
+
   ```shell
   .helmignore # Match any file or directory named .helmignore
   .git        # Match any file or directory named .git

@@ -12,12 +12,13 @@
   ```
 
 - Config Goland - Docker Tools - Execution path
-    - `Settings / Build, Execution, Deployment / Docker / Tools / Docker execution` to `/usr/local/bin/docker`
-    - `Settings / Build, Execution, Deployment / Docker / Tools / Docker Compose execution` to `/usr/local/bin/docker`
+
+  - `Settings / Build, Execution, Deployment / Docker / Tools / Docker execution` to `/usr/local/bin/docker`
+  - `Settings / Build, Execution, Deployment / Docker / Tools / Docker Compose execution` to `/usr/local/bin/docker`
 
 - Config Goland - Docker Tools - Docker run configuration
-    - Connect to Docker daemon with:
-        - Unix socket: `desktop-linux` `unix:///home/USER/.docker/desktop/docker.sock`
+  - Connect to Docker daemon with:
+    - Unix socket: `desktop-linux` `unix:///home/USER/.docker/desktop/docker.sock`
 
 ### Containerize the app
 
@@ -122,37 +123,37 @@ The docker image for db is available at https://hub.docker.com/repository/docker
 
 - Store the script in a ConfigMap
 
-    ```yaml
-    apiVersion: v1
-    kind: ConfigMap
-    metadata:
-      name: db-load-script-configmap
-    data:
-      db-load-script.sql: |
-        USE ecomdb;
-        CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name varchar(255) default NULL,Price varchar(255) default NULL, ImageUrl varchar(255) default NULL,PRIMARY KEY (id)) AUTO_INCREMENT=1;
-        INSERT INTO products (Name,Price,ImageUrl) VALUES ("Laptop","100","c-1.png"),("Drone","200","c-2.png"),("VR","300","c-3.png"),("Tablet","50","c-5.png"),("Watch","90","c-6.png"),("Phone Covers","20","c-7.png"),("Phone","80","c-8.png"),("Laptop","150","c-4.png");
-    ```
+  ```yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: db-load-script-configmap
+  data:
+    db-load-script.sql: |
+      USE ecomdb;
+      CREATE TABLE products (id mediumint(8) unsigned NOT NULL auto_increment,Name varchar(255) default NULL,Price varchar(255) default NULL, ImageUrl varchar(255) default NULL,PRIMARY KEY (id)) AUTO_INCREMENT=1;
+      INSERT INTO products (Name,Price,ImageUrl) VALUES ("Laptop","100","c-1.png"),("Drone","200","c-2.png"),("VR","300","c-3.png"),("Tablet","50","c-5.png"),("Watch","90","c-6.png"),("Phone Covers","20","c-7.png"),("Phone","80","c-8.png"),("Laptop","150","c-4.png");
+  ```
 
 - Mount the ConfigMap as a volume in the Pod
 
-    ```yaml
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      name: my-pod
-    spec:
-      containers:
-        - name: my-container
-          image: my-image
-          volumeMounts:
-            - name: script-volume
-              mountPath: /scripts
-      volumes:
-        - name: script-volume
-          configMap:
-            name: db-load-script-configmap
-    ```
+  ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: my-pod
+  spec:
+    containers:
+      - name: my-container
+        image: my-image
+        volumeMounts:
+          - name: script-volume
+            mountPath: /scripts
+    volumes:
+      - name: script-volume
+        configMap:
+          name: db-load-script-configmap
+  ```
 
 #### Option 2: Copy the script to the Docker image
 

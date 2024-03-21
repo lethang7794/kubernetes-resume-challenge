@@ -24,7 +24,7 @@ e.g.
   ```
 
   ```
-  max 1 2 3           # Output: 6 
+  max 1 2 3           # Output: 6
   ```
 
 - Template function with injected values
@@ -37,9 +37,9 @@ e.g.
 
 1. A template function can be called inside template with its normal syntax
 
-    ```
-    {{ upper .Release.Name }}
-    ```
+   ```
+   {{ upper .Release.Name }}
+   ```
 
 2. or by using `pipeline`
 
@@ -49,7 +49,7 @@ e.g.
   {{ .Release.Name | upper }}
   ```
 
-- Instead of calling & pass in the argument:  `upper ARG`,
+- Instead of calling & pass in the argument: `upper ARG`,
 
 - we "sent" a value (as the _last argument_) to the function using a pipeline (`|`): `ARG | upper`.
 
@@ -58,6 +58,7 @@ e.g.
   ```gotemplate
   {{ "hello!" | upper | repeat 5 }}
   ```
+
   ```
   # Output: HELLO!HELLO!HELLO!HELLO!HELLO!
   ```

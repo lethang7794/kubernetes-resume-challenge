@@ -24,28 +24,29 @@ To read a file, you provide the file name to one of the functions of `.Files` to
 
 The file name is the name including filepath from the root of the chart.
 
---- 
+---
+
 Example: Read 3 files into a ConfigMap
 
 - We have 3 files in `/mychart`
-  
+
   ```
   # mychart/config1.toml
   message = Hello from config 1
   ```
-  
+
   ```
   # mychart/config2.toml
   message = This is config 2
   ```
-  
+
   ```
   # mychart/config3.toml
   message = Goodbye from config 3
   ```
 
 - Inject content of these 3 files into our ConfigMap
-  
+
   ```
   # /mychart/templates/configmap.yaml
   apiVersion: v1
@@ -59,13 +60,15 @@ Example: Read 3 files into a ConfigMap
       {{ $files.Get . }}
     {{- end }}
   ```
+
   - Create a `$files` variable to hold a reference to the `.Files` object
   - Use the `tuple` function to create a list of files that we loop through
   - Use `range` function to loop through the list of file names. For each file name, print out 2 lines:
     - Line 1: the file name via `{{ . }}` followed by `: |-`
-    - Line 2: the file content via ``{{ $files.Get . }}``
+    - Line 2: the file content via `{{ $files.Get . }}`
+
 - Output
-  
+
   ```
   # Source: mychart/templates/configmap.yaml
   apiVersion: v1
@@ -88,7 +91,7 @@ Example: Read 3 files into a ConfigMap
 Helm imports many function from Go `path` package[^go-path-package], and re-export with a lowercase name
 
 | Go    | Helm  |
-|-------|-------|
+| ----- | ----- |
 | Base  | base  |
 | Dir   | dir   |
 | Clean | clean |
@@ -114,10 +117,10 @@ For a full list of supporting glob patterns, see [`gobwas/glob` package's doc][^
 e.g.
 
 - Our `mychart` chart has the directory structure
-  
+
   ```
   ./mychart
-  ├── foo.txt 
+  ├── foo.txt
   ├── foo.yaml
   ├── bar.go
   ├── bar.conf
@@ -125,13 +128,13 @@ e.g.
   ```
 
 - Loop through the files and get the file:
+
   - via `$` (top-level scope)
     ```
     {{ range $path, $_ :=  .Files.Glob  "**.yaml" }}
       {{ $.Files.Get $path }}
     {{ end }}
     ```
-  
   - via $currentScope (using `with` function)
     ```
     {{ $currentScope := .}}
@@ -149,7 +152,7 @@ These methods are usually used with `.Glob` method
 e.g.
 
 - `.AsConfig`
-  
+
   ```
   apiVersion: v1
   kind: ConfigMap
@@ -160,7 +163,7 @@ e.g.
   ```
 
 - `.AsSecrets`
-  
+
   ```
   apiVersion: v1
   kind: Secret
@@ -178,7 +181,7 @@ Helm has `b64enc` function that can be used to transform the file content
 e.g.
 
 - `mychart/templates/secrets.yaml`
-  
+
   ```
   apiVersion: v1
   kind: Secret
@@ -191,7 +194,7 @@ e.g.
   ```
 
 - Output
-  
+
   ```
   # Source: mychart/templates/secret.yaml
   apiVersion: v1
@@ -218,7 +221,5 @@ data:
 ```
 
 [^go-path-package]: https://pkg.go.dev/path
-
 [^file-path-function]: https://helm.sh/docs/chart_template_guide/function_list/#file-path-functions
-
 [^gobwas-glob]: https://pkg.go.dev/github.com/gobwas/glob

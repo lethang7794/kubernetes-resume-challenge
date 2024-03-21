@@ -27,7 +27,7 @@ gcloud init
 ## Browser
 # Choose an account to continue to Google Cloud SDK
 # -> Choose your account
-# Sign in to Google Cloud SDK 
+# Sign in to Google Cloud SDK
 # -> Continue
 # Google Cloud SDK wants to access your Google Account
 # -> Allow

@@ -38,6 +38,7 @@
     myvalue: "Hello World"
     drink: {{ .Values.favoriteDrink }}
   ```
+
 - Install our chart (with new default values)
 
   ```shell
@@ -47,7 +48,7 @@
   ```
   install.go:214: [debug] Original chart version: ""
   install.go:231: [debug] CHART PATH: /home/lqt/go/src/github.com/lethang7794/kubernetes-resume-challenge/mychart
-  
+
   client.go:142: [debug] creating 1 resource(s)
   NAME: mychart-1710253837
   LAST DEPLOYED: Tue Mar 12 21:30:37 2024
@@ -57,10 +58,10 @@
   TEST SUITE: None
   USER-SUPPLIED VALUES:
   {}
-  
+
   COMPUTED VALUES:
   favoriteDrink: coffee
-  
+
   HOOKS:
   MANIFEST:
   ---
@@ -83,7 +84,7 @@
   ```
   install.go:214: [debug] Original chart version: ""
   install.go:231: [debug] CHART PATH: /home/lqt/go/src/github.com/lethang7794/kubernetes-resume-challenge/mychart
-  
+
   client.go:142: [debug] creating 1 resource(s)
   NAME: mychart-1710254007
   LAST DEPLOYED: Tue Mar 12 21:33:27 2024
@@ -93,10 +94,10 @@
   TEST SUITE: None
   USER-SUPPLIED VALUES:
   favoriteDrink: milk
-  
+
   COMPUTED VALUES:
   favoriteDrink: milk
-  
+
   HOOKS:
   MANIFEST:
   ---
@@ -142,7 +143,7 @@
   ```
   install.go:214: [debug] Original chart version: ""
   install.go:231: [debug] CHART PATH: /home/lqt/go/src/github.com/lethang7794/kubernetes-resume-challenge/mychart
-  
+
   client.go:142: [debug] creating 1 resource(s)
   NAME: mychart-1710254482
   LAST DEPLOYED: Tue Mar 12 21:41:22 2024
@@ -152,12 +153,12 @@
   TEST SUITE: None
   USER-SUPPLIED VALUES:
   {}
-  
+
   COMPUTED VALUES:
   favorite:
     drink: coke
     food: pizza
-  
+
   HOOKS:
   MANIFEST:
   ---
@@ -184,11 +185,12 @@ e.g.
 
   ```yaml
   livenessProbe:
-    httpGet:            # We don't need this key or its children
+    httpGet: # We don't need this key or its children
       path: /user/login #
-      port: http        #
+      port: http #
     initialDelaySeconds: 120
   ```
+
 - What we need
 
   ```yaml

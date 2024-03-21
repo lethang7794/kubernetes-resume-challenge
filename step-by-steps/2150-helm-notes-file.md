@@ -14,14 +14,14 @@ As the author of a chart, you can add any post-install information via the `NOTE
 e.g.
 
 - A basic NOTES.txt file
-  
+
   ```
   Thank you for installing {{ .Chart.Name }}.
-  
+
   Your release is named {{ .Release.Name }}.
-  
+
   To learn more about the release, try:
-  
+
     $ helm status {{ .Release.Name }}
     $ helm get all {{ .Release.Name }}
   ```
@@ -29,4 +29,3 @@ e.g.
 ## Why there is NOTES.txt file?
 
 NOTES.txt is used to send post-installation instructions to the users of your chart.
-

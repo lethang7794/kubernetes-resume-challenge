@@ -28,7 +28,7 @@ In Go, `define` let you define nested templates (in a template).
 An example of `define` in Go
 
 - Define nested templates
-  
+
   ```
   {{define "T1"}}ONE{{end}}
   {{define "T2"}}TWO{{end}}
@@ -36,13 +36,13 @@ An example of `define` in Go
   ```
 
 - Use the final template
-  
+
   ```
   {{template "T3"}}
   ```
 
 - Result
-  
+
   ```
   # Output:
   ONE TWO
@@ -96,8 +96,7 @@ These `_` files are the named templates (aka partials, sub-templates), and are u
 > [!INFO]
 > The default location of named templates is `_helpers.tpl` (which `helm create` creates for us)s
 
-> [!NOTE]
-> `_` files usually has the extension of `tpl`.
+> [!NOTE] > `_` files usually has the extension of `tpl`.
 
 ## How to use named template?
 
@@ -114,7 +113,7 @@ These `_` files are the named templates (aka partials, sub-templates), and are u
 #### `define` example
 
 - Define a template (to encapsulate labels)
-  
+
   ```
   # configmap.yaml
   {{- define "mychart.labels" }}
@@ -123,6 +122,7 @@ These `_` files are the named templates (aka partials, sub-templates), and are u
       date: {{ now | htmlDate }}
   {{- end }}
   ```
+
   NOTE: The template content is already indented.
 
 > [!WARNING]
@@ -130,6 +130,7 @@ These `_` files are the named templates (aka partials, sub-templates), and are u
 
 > [!NOTE]
 > By convention, `define` functions should
+>
 > - have a simple documentation block (`{{/* ... */}}`) describing what they do.
 > - be in the `_helpers.tpl` file.
 >
@@ -157,7 +158,7 @@ In Helm, the `template` action has 2 syntax:
 #### `template` example
 
 - Use [`mychart.labels` template](#define-example) in out template for ConfigMap object
-  
+
   ```
   # configmap.yaml
   apiVersion: v1
@@ -168,7 +169,7 @@ In Helm, the `template` action has 2 syntax:
   ```
 
 - The output
-  
+
   ```
   # Source: mychart/templates/configmap.yaml
   apiVersion: v1
@@ -179,6 +180,7 @@ In Helm, the `template` action has 2 syntax:
       generator: helm
       date: 2016-11-02
   ```
+
   NOTE: The output has correct indentation because our named template has already been indented.
 
 > [!NOTE]
@@ -193,7 +195,7 @@ When a named template (created with define) is rendered, it will receive the sco
 e.g.
 
 - Define a template that access to top-level object
-  
+
   ```
   {{/* Generate basic labels */}}
   {{- define "mychart.labels" }}
@@ -206,7 +208,7 @@ e.g.
   ```
 
 - Use `mychart.labels` template as before (without passing in any object)
-  
+
   ```
   apiVersion: v1
   kind: ConfigMap
@@ -214,7 +216,9 @@ e.g.
     name: {{ .Release.Name }}-configmap
     {{- template "mychart.labels" }}
   ```
+
   Output:
+
   ```
   # Source: mychart/templates/configmap.yaml
   apiVersion: v1
@@ -229,7 +233,7 @@ e.g.
   ```
 
 - Use `mychart.labels` template and pass in top-level object
-  
+
   ```
   apiVersion: v1
   kind: ConfigMap
@@ -237,7 +241,9 @@ e.g.
     name: {{ .Release.Name }}-configmap
     {{- template "mychart.labels" $ }}
   ```
+
   Output:
+
   ```
   # Source: mychart/templates/configmap.yaml
   apiVersion: v1
@@ -252,7 +258,7 @@ e.g.
   ```
 
 - Use `mychart.labels` template and pass in `.` also works
-  
+
   ```
   apiVersion: v1
   kind: ConfigMap
@@ -261,7 +267,9 @@ e.g.
     {{- template "mychart.labels" $ }}
     {{- template "mychart.labels" . }}
   ```
+
   Output
+
   ```
   # Source: mychart/templates/configmap.yaml
   apiVersion: v1
@@ -300,7 +308,7 @@ Just like `template` action, include has 2 syntax
 #### `include` example
 
 - Use `include` & pipeline to handle indentation
-  
+
   ```
   # _helpers.tpl
   {{- define "mychart.app" -}}
@@ -308,7 +316,7 @@ Just like `template` action, include has 2 syntax
   myAppVersion: "{{ .Chart.Version }}"
   {{- end -}}
   ```
-  
+
   ```
   # configmap.yaml
   apiVersion: v1
@@ -321,9 +329,9 @@ Just like `template` action, include has 2 syntax
     myValue: "Hello World"
   {{ include "mychart.app" . | indent 2 }}
   ```
-  
+
   Output:
-  
+
   ```
   # Source: mychart/templates/configmap.yaml
   apiVersion: v1
@@ -365,7 +373,7 @@ Just like `template` action, include has 2 syntax
 >   labels:
 >     myAppName: mychart
 > myAppVersion: "0.1.0"
-> 
+>
 > data:
 >   myValue: "Hello World"
 >   myAppName: mychart
@@ -381,11 +389,11 @@ Just like `template` action, include has 2 syntax
 
 - `include` can be passed to functions in a pipeline.
 - `include` can dynamically reference templates.
-  
+
   You can provide the name as a variable, and include will dereference that variable.
-  
+
   - e.g. `{{ include $mytemplate }}`
-  
+
   The `template` function, in contrast, will only accept a string literal.
 
 ## Why use `include` instead of `block`?
@@ -402,7 +410,7 @@ The suggestion is a combination of
 e.g.
 
 - The implementation with default via `define` & `default`
-  
+
   ```kubernetes helm
   # _helpers.tpl
   {{- define "my-chart.fullname" -}}
@@ -411,7 +419,7 @@ e.g.
   ```
 
 - Use the value with `include`
-  
+
   ```kubernetes helm
   # deployment.yaml
   env:
@@ -422,7 +430,7 @@ e.g.
   ```
 
 - Override values
-  
+
   ```kubernetes helm
   # values.yaml
   database:

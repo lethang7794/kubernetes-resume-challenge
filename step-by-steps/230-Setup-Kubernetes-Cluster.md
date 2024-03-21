@@ -25,6 +25,7 @@ When everything works, we will choose one 1 provider and deploy another environm
   ```shell
   minikube start
   ```
+
   ```
   😄  minikube v1.32.0 on Fedora 39
   ...
@@ -32,6 +33,7 @@ When everything works, we will choose one 1 provider and deploy another environm
   ...
   🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
   ```
+
 - Or start minikube with Podman & rooless
 
   ```bash
@@ -60,28 +62,28 @@ When everything works, we will choose one 1 provider and deploy another environm
 
 - Confirm minikube is working
 
-    ```shell
-    minikube status
-    ```
+  ```shell
+  minikube status
+  ```
 
-    ```
-    minikube
-    type: Control Plane
-    host: Running
-    kubelet: Running
-    apiserver: Running
-    kubeconfig: Configured
-    ```
+  ```
+  minikube
+  type: Control Plane
+  host: Running
+  kubelet: Running
+  apiserver: Running
+  kubeconfig: Configured
+  ```
 
 - Confirm kubectl works with minikube
 
-    ```shell
-    kubectl cluster-info
-    ```
+  ```shell
+  kubectl cluster-info
+  ```
 
-    ```
-    Kubernetes control plane is running at https://127.0.0.1:35321
-    CoreDNS is running at https://127.0.0.1:35321/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
-      
-    To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
-    ```
+  ```
+  Kubernetes control plane is running at https://127.0.0.1:35321
+  CoreDNS is running at https://127.0.0.1:35321/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+  To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+  ```

@@ -26,7 +26,7 @@ Unlike library chart (which only includes utilities/functions), subcharts can in
 A subchart is considered a _stand-alone_ chart, which:
 
 - doesn't depend on its parent chart.
-  
+
   As subchart cannot access the values of its parent.
 
 - but can be overridden by its parent chart.
@@ -49,19 +49,19 @@ cd mychart/charts && helm create mysubchart
 Let's start the subchart from scratch
 
 - Remove the generated chart's templates in `/templates/*` & `values.yaml` content
-  
+
   ```bash
   cd mychart/charts && echo > mysubchart/values.yaml
   cd mychart/charts && rm -rf mysubchart/templates/*
   ```
 
 - Our `values.yaml` & `configmap.yaml` template
-  
+
   ```kubernetes helm
   # mychart/charts/mysubchart/values.yaml
   dessert: cake
   ```
-  
+
   ```kubernetes helm
   # mychart/charts/mysubchart/templates/configmap.yaml
   apiVersion: v1
@@ -73,23 +73,23 @@ Let's start the subchart from scratch
   ```
 
 - Output
-  
+
   ```bash
   helm install --generate-name --dry-run mychart/charts/mysubchart
   ```
-  
+
   ```bash
   helm install --generate-name --debug mychart/charts/mysubchart
   ```
-  
+
   ```bash
   helm install --generate-name --dry-run --debug mychart/charts/mysubchart
   ```
-  
+
   ```bash
   helm template mychart/charts/mysubchart
   ```
-  
+
   ```
   # Source: mysubchart/templates/configmap.yaml
   apiVersion: v1
@@ -103,17 +103,17 @@ Let's start the subchart from scratch
 ## The relationship between parent chart & subchart
 
 - Let's install the parent chart
-  
+
   ```bash
   helm install --generate-name --dry-run --debug mychart
   ```
 
 - Output
-  
+
   ```shell
   install.go:218: [debug] Original chart version: ""
   install.go:235: [debug] CHART PATH: /home/lqt/go/src/github.com/lethang7794/kubernetes-resume-challenge/mychart
-  
+
   NAME: mychart-1710586517
   LAST DEPLOYED: Sat Mar 16 17:55:17 2024
   NAMESPACE: default
@@ -122,14 +122,14 @@ Let's start the subchart from scratch
   TEST SUITE: None
   USER-SUPPLIED VALUES:
   {}
-  
+
   COMPUTED VALUES:
   favorite:
     drink: coke
   mysubchart:
     dessert: cake
     global: {}
-  
+
   HOOKS:
   MANIFEST:
   ---
@@ -160,22 +160,22 @@ Currently, the final manifest use the values from the subchart's `values.yaml`, 
 Because `mysubchart` is a subchart of `mychart`, you can provides values to `mychart` and let these values passed to `mysubchart`.
 
 - Provide values to `mychart` (the parent chart)
-  
+
   ```kubernetes helm
   # mychart/values.yaml
   favorite:
     drink: coffee
-  
+
   mysubchart:
     dessert: ice cream
   ```
 
 - Let's see the subchart manifest
-  
+
   ```bash
   helm install --generate-name --dry-run --debug mychart
   ```
-  
+
   ```shell
   MANIFEST:
   ---
@@ -196,7 +196,7 @@ Because `mysubchart` is a subchart of `mychart`, you can provides values to `myc
     config1.toml: |-
       Hello from config 1
   ```
-  
+
   The values of `mychart` has overridden the values of `mysubchart`.
 
 > [!INFO]
@@ -214,22 +214,23 @@ The Values data type has a reserved section called `Values.global` where global 
 e.g.
 
 - Set global values in `values.yaml`
-  
+
   ```
   # mychart/values.yaml
   favorite:
     drink: coffee
-  
+
   mysubchart:
     dessert: ice cream
-  
+
   global:
     salad: caesar
   ```
 
 - Global values can be accessed in
+
   - The parent chart - `mychart/templates/configmap.yaml`
-    
+
     ```kubernetes helm
     apiVersion: v1
     kind: ConfigMap
@@ -238,9 +239,9 @@ e.g.
     data:
       salad: {{ .Values.global.salad }}
     ```
-  
+
   - Any sub chart, e.g. `/mysubchart/templates/configmap.yaml`
-    
+
     ```kubernetes helm
     apiVersion: v1
     kind: ConfigMap
@@ -250,8 +251,9 @@ e.g.
       dessert: {{ .Values.dessert }}
       salad: {{ .Values.global.salad }}
     ```
+
 - Output:
-  
+
   ```
   MANIFEST:
   ---
