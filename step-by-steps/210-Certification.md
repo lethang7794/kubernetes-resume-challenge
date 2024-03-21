@@ -7,8 +7,8 @@ Before this challenge,
 
 - I've used K8s at work to develope Go web application & deploy containerized app to AWS EKS.
 - I've read (& followed) 2 famous books about Kubernetes
-    - Kubernetes: Up and Running: Dive into the Future of Infrastructure (3rd Edition)
-    - Kubernetes in Action, Second Edition
+  - Kubernetes: Up and Running: Dive into the Future of Infrastructure (3rd Edition)
+  - Kubernetes in Action, Second Edition
 
 But it's almost one year ago, so I'll
 

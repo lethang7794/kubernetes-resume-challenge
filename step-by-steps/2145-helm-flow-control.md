@@ -68,7 +68,7 @@ mug: "true"
 > - Instead of using `{{` and `}}`.
 > - Always using `{{-` and `-}}`. Notice the extra dash (`-`) and space (``).
 >
-> For more information, see [Controlling Whitespace](./2146-helm-controlling-whitespace)
+> For more information, see [Controlling Whitespace](../2146-helm-controlling-whitespace)
 
 ## `with` statement
 
@@ -85,14 +85,14 @@ In Helm template language, `with` set the current scope (`.`) to a particular ob
 ### `with` example
 
 - Instead of access `drink`, `food` with
-  
+
   ```
   drink: {{ .Values.favorite.drink }}
   food: {{ .Values.favorite.food }}
   ```
 
 - We can do it with
-  
+
   ```
   {{- with .Values.favorite }}
   drink: {{ .drink }}
@@ -153,7 +153,7 @@ In Helm template language, the way to iterate through a collection is to use the
 ### `range` example
 
 - First, we have a list of pizza toppings in `values.yaml`
-  
+
   ```yaml
   # values.yaml
   pizzaToppings:
@@ -164,7 +164,7 @@ In Helm template language, the way to iterate through a collection is to use the
   ```
 
 - Then, in our template, we _**range over**_ (iterate through) the list (called `slice` in Go),
-  
+
   ```yaml
   # template.yaml
   toppings: |-
@@ -172,11 +172,11 @@ In Helm template language, the way to iterate through a collection is to use the
     - {{ .| title | quote }}
     {{- end }}
   ```
-  
+
   Each time through the loop, `.` is set to the _current_ pizza topping
 
 - If the template are executed, we'll got
-  
+
   ```yaml
   # Output:
   toppings: |-
