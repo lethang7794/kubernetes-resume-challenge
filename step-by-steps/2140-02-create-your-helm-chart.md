@@ -380,7 +380,7 @@ Error: INSTALLATION FAILED: Unable to continue with install: ConfigMap "mychart-
 
 ### What's next
 
-See [Build-in objects](./2142-helm-buildin-objects.md)
+See [Build-in objects](./2140-03-helm-buildin-objects)
 
 [^manifest]: <https://helm.sh/docs/helm/helm_get_manifest/>
 [^go-template]: <https://pkg.go.dev/text/template>

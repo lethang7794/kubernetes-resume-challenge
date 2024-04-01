@@ -142,7 +142,7 @@ In Helm template language, `with` set the current scope (`.`) to a particular ob
 > {{- end }}
 > ```
 >
-> - Use a `variable` (See [Variables section](2147-helm-variables.md#when-to-use-a-variable))
+> - Use a `variable` (See [Variables section](2140-08-helm-variables#when-to-use-a-variable))
 
 ## `range` function
 
